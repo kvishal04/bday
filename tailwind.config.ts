@@ -8,9 +8,15 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+      animation: {
+        "gradient-glow": "glow 2s infinite alternate",
+        "grow-shrink": "scale 2s infinite ease-in-out",
+      },
+      keyframes: {
+        glow: {
+          "0%": { boxShadow: "0 0 10px 2px #ffdd00" },
+          "100%": { boxShadow: "0 0 20px 5px #ff8800" },
+        },
       },
     },
   },
