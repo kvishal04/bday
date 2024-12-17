@@ -13,7 +13,7 @@ const playWrite = Playwrite_AR({
 export default function Home() {
   return (
     <div className="">
-      <div className="m-auto text-center">
+      <div className="m-auto text-center pt-8">
         <h1
         className={`text-4xl font-bold mb-8 tracking-wider text-gray-700 animate-bounce ${playWrite.className}`}
       >
