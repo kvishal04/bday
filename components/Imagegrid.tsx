@@ -76,22 +76,47 @@ const images = [
 ];
 
 const ImageGrid = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const [activeIndex, setActiveIndex] = useState<number|null>(null);
+  // Randomly pick an image to animate
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * images.length);
+      setActiveIndex(randomIndex);
+    }, 1000); // Change image every 2 seconds
 
-    // Randomly pick an image to animate
-    useEffect(() => {
-      const interval = setInterval(() => {
-        const randomIndex = Math.floor(Math.random() * images.length);
-        setActiveIndex(randomIndex);
-      }, 1000); // Change image every 2 seconds
-  
-      return () => clearInterval(interval);
-    }, []);
+    return () => clearInterval(interval);
+  }, []);
 
+  // Intersection Observer to track visibility
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const gridElement = document.getElementById("image-grid");
+    if (gridElement) {
+      observer.observe(gridElement);
+    }
+
+    return () => {
+      if (gridElement) observer.unobserve(gridElement);
+    };
+  }, []);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6 p-6">
+    <div
+      id="image-grid"
+      className={`grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6 p-6 transition-opacity duration-1000 ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
+    >
       {images.map((image, index) => (
         <div
           key={index}
@@ -117,6 +142,5 @@ const ImageGrid = () => {
     </div>
   );
 };
-
 
 export default ImageGrid;

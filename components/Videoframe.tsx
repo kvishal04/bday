@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 const Videoframe = () => {
   return (
-    <div className="flex flex-col md:flex-row items-start h-screen bg-gradient-to-r from-rose-300 to-fuchsia-200 text-white">
+    <div className="flex flex-col md:flex-row items-start  bg-gradient-to-r from-rose-300 to-fuchsia-200 text-white">
     {/* Right Side - Content */}
     <div className="w-full flex flex-col justify-center p-8 text-center md:text-left">
       <h1 className="text-2xl font-bold mb-4 animate-pulse">
