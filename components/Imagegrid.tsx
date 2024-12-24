@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const images = [
   {
-    src: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
+    src: '/assets/bday/4mayBday/Snapchat-1120770251.jpg',
     alt: 'Breakfast',
     height: 300, // Custom height
   },

@@ -47,7 +47,7 @@ const Videoframe = () => {
         Learn More
       </button>
     </div>
-  </div>
+    </div>
   
   );
 };
