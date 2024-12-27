@@ -1,43 +1,42 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import Particles from "react-tsparticles";
 
 const BirthdayPage: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [isClient, setIsClient] = useState(false);
 
+  // Make sure we are on the client-side before rendering dynamic content
   useEffect(() => {
-    // Trigger fade-in animation on load
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    return () => clearTimeout(timer);
+    setIsClient(true); // This will ensure the component only updates in the client
+    setIsVisible(true)
   }, []);
 
-  const calculateTimeLeft = () => {
-    const now = new Date();
-    const target = new Date('2025-01-13');
-    const diff = target.getTime() - now.getTime();
-  
-    if (diff <= 0) {
-      // Return zero when the target date has passed
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    }
-  
-    return {
-      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((diff / (1000 * 60)) % 60),
-      seconds: Math.floor((diff / 1000) % 60),
-    };
-  };
-
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
   useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const target = new Date('2025-01-13');
+      const diff = target.getTime() - now.getTime();
+    
+      if (diff <= 0) {
+        return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      }
+    
+      return {
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        seconds: Math.floor((diff / 1000) % 60),
+      };
+    };
+
+    // Set up timer to update every second
     const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Toggle background music
   const toggleMusic = () => {
     const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
     if (isPlaying) {
@@ -48,23 +47,25 @@ const BirthdayPage: React.FC = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const herPhotoUrl = "/assets/bday/4mayBday/Snapchat-1120770251.jpg"; // Replace with the actual URL
+  const herPhotoUrl = "/assets/bday/randomclicks/Snapchat-1687387090.jpg"; 
 
   return (
     <div className="relative flex flex-col items-center justify-center p-12 bg-animated-gradient text-gray-800 overflow-hidden">
-      {/* Particles Background */}
-      <Particles
-        options={{
-          particles: {
-            number: { value: 40 },
-            size: { value: 3 },
-            move: { speed: 1 },
-            opacity: { value: 0.3 },
-            line_linked: { enable: false },
-          },
-        }}
-        className="absolute inset-0 z-0"
-      />
+      {/* Render particles only on the client-side */}
+      {isClient && (
+        <Particles
+          options={{
+            particles: {
+              number: { value: 40 },
+              size: { value: 3 },
+              move: { speed: 1 },
+              opacity: { value: 0.3 },
+              line_linked: { enable: false },
+            },
+          }}
+          className="absolute inset-0 z-0"
+        />
+      )}
 
       {/* Fade-in Container */}
       <div
@@ -72,7 +73,6 @@ const BirthdayPage: React.FC = () => {
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        {/* Header Section */}
         <h1 className="text-4xl md:text-5xl font-handwritten text-pink-600 animate-float">
           Happy Birthday, My Love!
         </h1>
@@ -93,7 +93,7 @@ const BirthdayPage: React.FC = () => {
         <div className="mt-6 text-purple-700">
           <h2 className="text-lg font-semibold">Countdown to Midnight</h2>
           <p className="text-2xl font-bold">
-          {timeLeft.days} days,  {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+            {timeLeft.days} days, {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
           </p>
         </div>
 

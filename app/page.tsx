@@ -1,5 +1,5 @@
+"use client";
 import Imagegrid from "@/components/Imagegrid";
-import Image from "next/image";
 import { Geist, Geist_Mono, Playwrite_AR } from "next/font/google";
 import Videoframe from "@/components/Videoframe";
 import BirthdayPage from "@/components/Romantic";

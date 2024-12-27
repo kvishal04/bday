@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -7,71 +7,61 @@ const images = [
     src: '/assets/bday/4mayBday/Snapchat-1120770251.jpg',
     alt: 'Breakfast',
     height: 300, // Custom height
+    tag: 'mybday'
   },
   {
-    src: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
+    src: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
     alt: 'Forest',
     height: 350, // Custom height
+   tag: 'arcade'
   },
   {
     src: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
     alt: 'Beach',
     height: 400, // Custom height
+   tag: 'diwali'
   },
   {
     src: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
     alt: 'Road',
     height: 250, // Custom height
+   tag: 'durgapuja'
   },
   {
     src: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
     alt: 'Cat',
     height: 450, // Custom height
+   tag: 'random'
   },
   {
     src: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
     alt: 'Mountain',
     height: 300, // Custom height
+   tag: 'sunnyday'
   },
   {
     src: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
     alt: 'Camping',
     height: 250, // Custom height
+   tag: 'christmas'
   },
   {
     src: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
     alt: 'Desert',
     height: 450, // Custom height
+   tag: 'holi'
   },
   {
     src: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
     alt: 'Camping',
     height: 250, // Custom height
+   tag: 'aniversary'
   },
   {
-    src: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Mountain Peak',
-    height: 300, // Custom height
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Pathway',
-    height: 400, // Custom height
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Trees',
+    src: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
+    alt: 'Camping',
     height: 250, // Custom height
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Mountain Peak',
-    height: 300, // Custom height
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Mountain Peak',
-    height: 300, // Custom height
+   tag: 'yourselfies'
   },
 ];
 
@@ -84,9 +74,10 @@ const ImageGrid = () => {
     const interval = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * images.length);
       setActiveIndex(randomIndex);
-    }, 1000); // Change image every 2 seconds
+  }, 1000); // Change image every 2 seconds
 
     return () => clearInterval(interval);
+ 
   }, []);
 
   // Intersection Observer to track visibility
