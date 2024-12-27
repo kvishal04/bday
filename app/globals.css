@@ -15,6 +15,17 @@
   }
 } 
 
+@keyframes wordFade {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-grow-shrink {
   animation: grow-shrink 1s ease-in-out infinite; 
 }
@@ -22,4 +33,31 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.fade-in-words span {
+  opacity: 0;
+  animation: wordFade 1s ease forwards;
+}
+
+.fade-in-words span:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.fade-in-words span:nth-child(2) {
+  animation-delay: 100ms;
+}
+
+.fade-in-words span:nth-child(3) {
+  animation-delay: 200ms;
 }

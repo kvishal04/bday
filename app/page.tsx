@@ -2,6 +2,7 @@ import Imagegrid from "@/components/Imagegrid";
 import Image from "next/image";
 import { Geist, Geist_Mono, Playwrite_AR } from "next/font/google";
 import Videoframe from "@/components/Videoframe";
+import BirthdayPage from "@/components/Romantic";
 
 
 const playWrite = Playwrite_AR({
@@ -12,7 +13,8 @@ const playWrite = Playwrite_AR({
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="glass">
+      <BirthdayPage />
       <div className="m-auto text-center pt-8">
         <h1
         className={`text-4xl font-bold mb-8 tracking-wider text-gray-700 animate-bounce ${playWrite.className}`}
