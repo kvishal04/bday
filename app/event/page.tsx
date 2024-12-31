@@ -1,16 +1,15 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
+import { useSearchParams } from 'next/navigation'
 
 const EventPage: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [currentContentIndex, setCurrentContextIndex] = useState<number | null>(null);
+    const searchParams = useSearchParams()
+    const tag = searchParams.get('tag') || null
     const startX = useRef(0);
     const endX = useRef(0);
-
-    useEffect(() => {
-        const timer = setTimeout(() => setIsVisible(true), 100);
-        return () => clearTimeout(timer);
-    }, []);
 
     const content = [
         {
@@ -170,6 +169,17 @@ const EventPage: React.FC = () => {
         },
         
     ];
+
+    useEffect(() => {
+        if(tag){
+            setCurrentContextIndex(content.map((x)=>x.tag).indexOf(tag))
+        }
+        const timer = setTimeout(() => setIsVisible(true), 100);
+        return () => clearTimeout(timer);
+      
+    }, [tag]);
+
+  
     const handleTouchStart = (e: React.TouchEvent) => {
         startX.current = e.touches[0].clientX;
     };
@@ -196,9 +206,9 @@ const EventPage: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-handwritten text-purple-600 mb-8">
                 Welcome to the Event
             </h1>
-
+            {currentContentIndex !== null ? 
             <div className="flex flex-col gap-12 w-full max-w-5xl">
-                {content[3].data.map((item, index) => (
+                {content[currentContentIndex].data.map((item, index) => (
                     <div
                         key={index}
                         className={`flex flex-col md:flex-row items-center justify-between gap-4 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""}`}
@@ -244,7 +254,7 @@ const EventPage: React.FC = () => {
                 ))}
 
                 {/* Swipeable Carousel for extraGallery */}
-                {content[3].extraGallery.length > 0 ? (
+                {content[currentContentIndex].extraGallery.length > 0 ? (
                     <div className="w-full mt-8">
                         <h2 className="text-2xl md:text-3xl font-semibold text-purple-600 mb-4">
                             Additional Gallery
@@ -253,7 +263,7 @@ const EventPage: React.FC = () => {
                             className="relative w-full overflow-hidden"
                             onTouchStart={handleTouchStart}
                             onTouchMove={handleTouchMove}
-                            onTouchEnd={() => handleTouchEnd(content[3].extraGallery.length)}
+                            onTouchEnd={() => handleTouchEnd(content[currentContentIndex].extraGallery.length)}
                         >
                             <div
                                 className="flex transition-transform duration-500"
@@ -274,7 +284,7 @@ const EventPage: React.FC = () => {
                         </div>
                         {/* Indicators */}
                         <div className="flex justify-center mt-4 gap-2">
-                            {content[3].extraGallery.map((_, index) => (
+                            {content[currentContentIndex].extraGallery.map((_, index) => (
                                 <button
                                     key={index}
                                     className={`w-3 h-3 rounded-full ${currentSlide === index ? "bg-purple-600" : "bg-gray-300"}`}
@@ -285,6 +295,7 @@ const EventPage: React.FC = () => {
                     </div>
                 ) : null}
             </div>
+            : <></> }
         </div>
     );
 };
