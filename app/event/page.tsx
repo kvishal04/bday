@@ -1,16 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 const EventPage: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const startX = useRef(0);
+    const endX = useRef(0);
 
     useEffect(() => {
         const timer = setTimeout(() => setIsVisible(true), 100);
         return () => clearTimeout(timer);
     }, []);
 
-    const count = 4;
     const content = [
         {
             data: [
@@ -120,13 +121,25 @@ const EventPage: React.FC = () => {
         },
         
     ];
-
-    const handlePrevSlide = (length: number) => {
-        setCurrentSlide((prev) => (prev === 0 ? length - 1 : prev - 1));
+    const handleTouchStart = (e: React.TouchEvent) => {
+        startX.current = e.touches[0].clientX;
     };
 
-    const handleNextSlide = (length: number) => {
-        setCurrentSlide((prev) => (prev === length - 1 ? 0 : prev + 1));
+    const handleTouchMove = (e: React.TouchEvent) => {
+        endX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = (length: number) => {
+        const deltaX = endX.current - startX.current;
+        if (deltaX > 50) {
+            // Swipe right
+            setCurrentSlide((prev) => (prev === 0 ? length - 1 : prev - 1));
+        } else if (deltaX < -50) {
+            // Swipe left
+            setCurrentSlide((prev) => (prev === length - 1 ? 0 : prev + 1));
+        }
+        startX.current = 0;
+        endX.current = 0;
     };
 
     return (
@@ -136,7 +149,7 @@ const EventPage: React.FC = () => {
             </h1>
 
             <div className="flex flex-col gap-12 w-full max-w-5xl">
-                {content[count].data.map((item, index) => (
+                {content[1].data.map((item, index) => (
                     <div
                         key={index}
                         className={`flex flex-col md:flex-row items-center justify-between gap-4 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""}`}
@@ -181,61 +194,54 @@ const EventPage: React.FC = () => {
                     </div>
                 ))}
 
-                {/* Carousel for extraGallery */}
-                {content[count].extraGallery.length > 0 ? 
-                <div className="w-full mt-8">
-                    <h2 className="text-2xl md:text-3xl font-semibold text-purple-600 mb-4">
-                        Additional Gallery
-                    </h2>
-                    <div className="relative w-full overflow-hidden">
+                {/* Swipeable Carousel for extraGallery */}
+                {content[1].extraGallery.length > 0 ? (
+                    <div className="w-full mt-8">
+                        <h2 className="text-2xl md:text-3xl font-semibold text-purple-600 mb-4">
+                            Additional Gallery
+                        </h2>
                         <div
-                            className="flex transition-transform duration-500"
-                            style={{
-                                transform: `translateX(-${currentSlide * 100}%)`,
-                            }}
+                            className="relative w-full overflow-hidden"
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={() => handleTouchEnd(content[1].extraGallery.length)}
                         >
-                            {content[count].extraGallery.map((imgSrc, index) => (
-                                <div key={index} className="min-w-full">
-                                    <img
-                                        src={imgSrc}
-                                        alt={`Gallery Image ${index + 1}`}
-                                        className="w-full aspect-square rounded-lg shadow-md"
-                                    />
-                                </div>
+                            <div
+                                className="flex transition-transform duration-500"
+                                style={{
+                                    transform: `translateX(-${currentSlide * 100}%)`,
+                                }}
+                            >
+                                {content[1].extraGallery.map((imgSrc, index) => (
+                                    <div key={index} className="min-w-full">
+                                        <img
+                                            src={imgSrc}
+                                            alt={`Gallery Image ${index + 1}`}
+                                            className="w-full aspect-square rounded-lg shadow-md"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        {/* Indicators */}
+                        <div className="flex justify-center mt-4 gap-2">
+                            {content[1].extraGallery.map((_, index) => (
+                                <button
+                                    key={index}
+                                    className={`w-3 h-3 rounded-full ${currentSlide === index ? "bg-purple-600" : "bg-gray-300"}`}
+                                    onClick={() => setCurrentSlide(index)}
+                                ></button>
                             ))}
                         </div>
-                        {/* Navigation */}
-                        <button
-                            onClick={() => handlePrevSlide(content[count].extraGallery.length)}
-                            className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-purple-600 text-white rounded-full p-2 shadow-lg"
-                        >
-                            ◀
-                        </button>
-                        <button
-                            onClick={() => handleNextSlide(content[count].extraGallery.length)}
-                            className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-purple-600 text-white rounded-full p-2 shadow-lg"
-                        >
-                            ▶
-                        </button>
                     </div>
-                    {/* Indicators */}
-                    <div className="flex justify-center mt-4 gap-2">
-                        {content[count].extraGallery.map((_, index) => (
-                            <button
-                                key={index}
-                                className={`w-3 h-3 rounded-full ${currentSlide === index ? "bg-purple-600" : "bg-gray-300"}`}
-                                onClick={() => setCurrentSlide(index)}
-                            ></button>
-                        ))}
-                    </div>
-                </div>
-                : <></> }
+                ) : null}
             </div>
         </div>
     );
 };
 
 export default EventPage;
+
 
 
 
