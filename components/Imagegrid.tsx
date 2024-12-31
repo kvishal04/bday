@@ -104,7 +104,7 @@ const ImageGrid = () => {
     >
       {images.map((image, index) => (
         <Link
-          href={`/event?tag=${image.tag}`}
+          href={`/event/${image.tag}`}
           key={index}
           className={`relative group overflow-hidden rounded-lg shadow-lg transition-transform duration-1000 ease-out ${
             activeIndex === index ? "animate-grow-shrink" : ""
