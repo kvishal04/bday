@@ -31,6 +31,32 @@ const EventPage: React.FC = () => {
         {
             data: [
                 {
+                    imgSrc: "/assets/bday/arcade22JUN/2.jpg",
+                    type:"image",
+                    text: "Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.",
+                },
+                {
+                    type:"image",
+                    imgSrc: "/assets/bday/arcade22JUN/Snapchat-74132284.jpg",
+                    text: "The vibrant decorations, sparkling lights, and mouth-watering sweets are what make Diwali truly magical.",
+                },
+                {
+                    type:"video",
+                    imgSrc: "/assets/bday/arcade22JUN/Snapchat-1430343541.mp4",
+                    text: "The vibrant decorations, sparkling lights, and mouth-watering sweets are what make Diwali truly magical.",
+                },
+                {
+                    type:"image",
+                    imgSrc: "/assets/bday/arcade22JUN/Snapchat-865649172.jpg",
+                    text: "The vibrant decorations, sparkling lights, and mouth-watering sweets are what make Diwali truly magical.",
+                },
+            ],
+            tag: 'arcade',
+            extraGallery: []
+        },
+        {
+            data: [
+                {
                     imgSrc: "/assets/bday/diwali/12.jpeg",
                     type:"image",
                     text: "Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.",
@@ -148,11 +174,6 @@ const EventPage: React.FC = () => {
         {
             data: [
                 {
-                    imgSrc: "/assets/bday/sunnyday/1.mp4",
-                    type:"video",
-                    text: "Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.",
-                },
-                {
                     imgSrc: "/assets/bday/sunnyday/2.JPG",
                     type:"image",
                     text: "The vibrant decorations, sparkling lights, and mouth-watering sweets are what make Diwali truly magical.",
@@ -172,7 +193,7 @@ const EventPage: React.FC = () => {
 
     useEffect(() => {
         if(tag){
-            setCurrentContextIndex(content.map((x)=>x.tag).indexOf(tag))
+            setCurrentContextIndex([...content].map((x)=>x.tag).indexOf(tag))
         }
         const timer = setTimeout(() => setIsVisible(true), 100);
         return () => clearTimeout(timer);
@@ -206,7 +227,7 @@ const EventPage: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-handwritten text-purple-600 mb-8">
                 Welcome to the Event
             </h1>
-            {currentContentIndex !== null ? 
+            {currentContentIndex !== null && currentContentIndex !== undefined ? 
             <div className="flex flex-col gap-12 w-full max-w-5xl">
                 {content[currentContentIndex].data.map((item, index) => (
                     <div

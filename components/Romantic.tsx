@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Particles from "react-tsparticles";
 
 const BirthdayPage: React.FC = () => {
@@ -7,11 +7,13 @@ const BirthdayPage: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isClient, setIsClient] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Make sure we are on the client-side before rendering dynamic content
+  // Ensure client-side rendering
   useEffect(() => {
-    setIsClient(true); // This will ensure the component only updates in the client
-    setIsVisible(true)
+    setIsClient(true);
+    setIsVisible(true);
   }, []);
 
   useEffect(() => {
@@ -19,11 +21,11 @@ const BirthdayPage: React.FC = () => {
       const now = new Date();
       const target = new Date('2025-01-13');
       const diff = target.getTime() - now.getTime();
-    
+
       if (diff <= 0) {
         return { days: 0, hours: 0, minutes: 0, seconds: 0 };
       }
-    
+
       return {
         days: Math.floor(diff / (1000 * 60 * 60 * 24)),
         hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
@@ -32,26 +34,49 @@ const BirthdayPage: React.FC = () => {
       };
     };
 
-    // Set up timer to update every second
     const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
     return () => clearInterval(timer);
   }, []);
 
+  // Toggle Music
   const toggleMusic = () => {
-    const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
     if (isPlaying) {
-      audio.pause();
+      audioRef.current?.pause();
     } else {
-      audio.play();
+      audioRef.current?.play();
     }
     setIsPlaying(!isPlaying);
   };
 
-  const herPhotoUrl = "/assets/bday/randomclicks/5.jpg"; 
+  // Automatically play/pause music based on visibility
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          audioRef.current?.play();
+          setIsPlaying(true);
+        } else {
+          audioRef.current?.pause();
+          setIsPlaying(false);
+        }
+      },
+      { threshold: 0.5 } // Play music when at least 50% of the component is visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const herPhotoUrl = "/assets/bday/randomclicks/5.jpg";
 
   return (
-    <div className="relative flex flex-col items-center justify-center p-12 bg-animated-gradient text-gray-800 overflow-hidden">
-      {/* Render particles only on the client-side */}
+    <div
+      ref={sectionRef}
+      className="relative flex flex-col items-center justify-center p-12 bg-animated-gradient text-gray-800 overflow-hidden"
+    >
       {isClient && (
         <Particles
           options={{
@@ -67,7 +92,6 @@ const BirthdayPage: React.FC = () => {
         />
       )}
 
-      {/* Fade-in Container */}
       <div
         className={`relative z-10 flex flex-col items-center text-center transition-opacity duration-1000 ${
           isVisible ? "opacity-100" : "opacity-0"
@@ -80,7 +104,6 @@ const BirthdayPage: React.FC = () => {
           Today is all about you. Thank you for filling my life with love and joy.
         </p>
 
-        {/* Photo Section */}
         <div className="mt-8 relative glass w-64 h-64 md:w-72 md:h-72 rounded-full shadow-lg overflow-hidden border-4 border-purple-300">
           <img
             src={herPhotoUrl}
@@ -89,7 +112,6 @@ const BirthdayPage: React.FC = () => {
           />
         </div>
 
-        {/* Countdown Section */}
         <div className="mt-6 text-purple-700">
           <h2 className="text-lg font-semibold">Countdown to Midnight</h2>
           <p className="text-2xl font-bold">
@@ -97,7 +119,6 @@ const BirthdayPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Music Control Button */}
         <button
           onClick={toggleMusic}
           className="mt-6 px-6 py-2 bg-purple-500 text-white rounded-lg shadow-md hover:bg-purple-700 transition-colors"
@@ -106,8 +127,12 @@ const BirthdayPage: React.FC = () => {
         </button>
       </div>
 
-      {/* Audio Element */}
-      <audio id="birthdayMusic" src="/assets/happy-birthday-to-you-piano-version-13976.mp3" loop></audio>
+      <audio
+        ref={audioRef}
+        id="birthdayMusic"
+        src="/assets/happy-birthday-to-you-piano-version-13976.mp3"
+        loop
+      ></audio>
     </div>
   );
 };

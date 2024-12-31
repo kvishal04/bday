@@ -22,7 +22,7 @@ const Videoframe = () => {
             playsInline
           >
             <source
-              src="/assets/bday/arcade22JUN/Snapchat-1430343541.mp4"
+              src="/assets/bday/1.mp4"
               type="video/mp4"
             />
             Your browser does not support the video tag.
