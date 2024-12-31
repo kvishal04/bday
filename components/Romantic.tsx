@@ -6,20 +6,20 @@ const BirthdayPage: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [isClient, setIsClient] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+  const [wasManuallyPaused, setWasManuallyPaused] = useState(false); // Track if music was manually paused
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Ensure client-side rendering
+  // Ensure we are rendering client-side
   useEffect(() => {
-    setIsClient(true);
     setIsVisible(true);
   }, []);
 
+  // Countdown Timer
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
-      const target = new Date('2025-01-13');
+      const target = new Date("2025-01-13");
       const diff = target.getTime() - now.getTime();
 
       if (diff <= 0) {
@@ -38,60 +38,95 @@ const BirthdayPage: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Toggle Music
+  // Autoplay audio when user interacts
+  useEffect(() => {
+    const enableAudioOnGesture = () => {
+      const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
+      if (audio && !hasUserInteracted) {
+        audio.muted = true; // Start muted
+        audio.play().then(() => {
+          audio.muted = false; // Unmute on user gesture
+          setHasUserInteracted(true);
+          setIsPlaying(true);
+        }).catch((err) => console.error("Audio play failed:", err));
+      }
+    };
+
+    const handleGesture = () => {
+      enableAudioOnGesture();
+      document.removeEventListener("click", handleGesture);
+      document.removeEventListener("scroll", handleGesture);
+    };
+
+    document.addEventListener("click", handleGesture);
+    document.addEventListener("scroll", handleGesture);
+
+    return () => {
+      document.removeEventListener("click", handleGesture);
+      document.removeEventListener("scroll", handleGesture);
+    };
+  }, [hasUserInteracted]);
+
+  // Handle visibility of the button and the play/pause action based on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
+      if (!buttonRef.current || !audio || wasManuallyPaused) return;
+
+      const rect = buttonRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Check if the button is visible
+      const isButtonVisible = rect.top >= 0 && rect.bottom <= windowHeight;
+
+      if (!isButtonVisible && isPlaying) {
+        audio.pause();
+        setIsPlaying(false);
+      } else if (isButtonVisible && !isPlaying) {
+        audio.play();
+        setIsPlaying(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isPlaying, wasManuallyPaused]);
+
+  // Toggle music play/pause with manual control
   const toggleMusic = () => {
+    const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
     if (isPlaying) {
-      audioRef.current?.pause();
+      audio.pause();
+      setWasManuallyPaused(true); // Mark as manually paused
     } else {
-      audioRef.current?.play();
+      audio.play();
+      setWasManuallyPaused(false); // Reset manual pause flag
     }
     setIsPlaying(!isPlaying);
   };
 
-  // Automatically play/pause music based on visibility
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          audioRef.current?.play();
-          setIsPlaying(true);
-        } else {
-          audioRef.current?.pause();
-          setIsPlaying(false);
-        }
-      },
-      { threshold: 0.5 } // Play music when at least 50% of the component is visible
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   const herPhotoUrl = "/assets/bday/randomclicks/5.jpg";
 
   return (
-    <div
-      ref={sectionRef}
-      className="relative flex flex-col items-center justify-center p-12 bg-animated-gradient text-gray-800 overflow-hidden"
-    >
-      {isClient && (
-        <Particles
-          options={{
-            particles: {
-              number: { value: 40 },
-              size: { value: 3 },
-              move: { speed: 1 },
-              opacity: { value: 0.3 },
-              line_linked: { enable: false },
-            },
-          }}
-          className="absolute inset-0 z-0"
-        />
-      )}
+    <div className="relative flex flex-col items-center justify-center p-12 bg-animated-gradient text-gray-800 overflow-hidden">
+      {/* Render particles */}
+      <Particles
+        options={{
+          particles: {
+            number: { value: 40 },
+            size: { value: 3 },
+            move: { speed: 1 },
+            opacity: { value: 0.3 },
+            line_linked: { enable: false },
+          },
+        }}
+        className="absolute inset-0 z-0"
+      />
 
+      {/* Fade-in Container */}
       <div
         className={`relative z-10 flex flex-col items-center text-center transition-opacity duration-1000 ${
           isVisible ? "opacity-100" : "opacity-0"
@@ -104,6 +139,7 @@ const BirthdayPage: React.FC = () => {
           Today is all about you. Thank you for filling my life with love and joy.
         </p>
 
+        {/* Photo Section */}
         <div className="mt-8 relative glass w-64 h-64 md:w-72 md:h-72 rounded-full shadow-lg overflow-hidden border-4 border-purple-300">
           <img
             src={herPhotoUrl}
@@ -112,6 +148,7 @@ const BirthdayPage: React.FC = () => {
           />
         </div>
 
+        {/* Countdown Section */}
         <div className="mt-6 text-purple-700">
           <h2 className="text-lg font-semibold">Countdown to Midnight</h2>
           <p className="text-2xl font-bold">
@@ -119,7 +156,9 @@ const BirthdayPage: React.FC = () => {
           </p>
         </div>
 
+        {/* Music Control Button */}
         <button
+          ref={buttonRef}
           onClick={toggleMusic}
           className="mt-6 px-6 py-2 bg-purple-500 text-white rounded-lg shadow-md hover:bg-purple-700 transition-colors"
         >
@@ -127,12 +166,8 @@ const BirthdayPage: React.FC = () => {
         </button>
       </div>
 
-      <audio
-        ref={audioRef}
-        id="birthdayMusic"
-        src="/assets/happy-birthday-to-you-piano-version-13976.mp3"
-        loop
-      ></audio>
+      {/* Audio Element */}
+      <audio id="birthdayMusic" src="/assets/happy-birthday-to-you-piano-version-13976.mp3" loop></audio>
     </div>
   );
 };
