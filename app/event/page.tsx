@@ -53,7 +53,7 @@ const EventPage: React.FC = () => {
                 },
                 
             ],
-            tag: 'mybday',
+            tag: 'diwali',
             extraGallery: ['/assets/bday/diwali/1.jpg',
                 '/assets/bday/diwali/2.jpg','/assets/bday/diwali/3.jpg','/assets/bday/diwali/4.jpg','/assets/bday/diwali/6.webp','/assets/bday/diwali/7.webp'
             ]
@@ -82,6 +82,11 @@ const EventPage: React.FC = () => {
         },
         {
             data: [
+                {
+                    imgSrc: "/assets/bday/durgapuja/6.jpeg",
+                    type:"image",
+                    text: "Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.",
+                },
                 {
                     imgSrc: "/assets/bday/durgapuja/2.jpg",
                     type:"image",
@@ -119,6 +124,50 @@ const EventPage: React.FC = () => {
             tag: 'foodanddrinks',
             extraGallery: ["/assets/bday/foodanddrinks/2.jpg","/assets/bday/foodanddrinks/4.jpg","/assets/bday/foodanddrinks/5.jpg"]
         },
+        {
+            data: [
+                {
+                    imgSrc: "/assets/bday/randomclicks/6.jpg",
+                    type:"image",
+                    text: "Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.",
+                },
+                {
+                    imgSrc: "/assets/bday/randomclicks/1.jpg",
+                    type:"image",
+                    text: "The vibrant decorations, sparkling lights, and mouth-watering sweets are what make Diwali truly magical.",
+                },
+                {
+                    imgSrc: "/assets/bday/randomclicks/3.jpg",
+                    type:"image",
+                    text: "The vibrant decorations, sparkling lights, and mouth-watering sweets are what make Diwali truly magical.",
+                },
+                
+            ],
+            tag: 'random',
+            extraGallery: ["/assets/bday/randomclicks/4.jpg","/assets/bday/randomclicks/5.jpg"]
+        },
+        {
+            data: [
+                {
+                    imgSrc: "/assets/bday/sunnyday/1.mp4",
+                    type:"video",
+                    text: "Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity. Diwali is the festival of lights, joy, and togetherness. It brings families closer and fills the atmosphere with happiness and prosperity.",
+                },
+                {
+                    imgSrc: "/assets/bday/sunnyday/2.JPG",
+                    type:"image",
+                    text: "The vibrant decorations, sparkling lights, and mouth-watering sweets are what make Diwali truly magical.",
+                },
+                {
+                    imgSrc: "/assets/bday/sunnyday/3.JPG",
+                    type:"image",
+                    text: "The vibrant decorations, sparkling lights, and mouth-watering sweets are what make Diwali truly magical.",
+                },
+                
+            ],
+            tag: 'sunnyday',
+            extraGallery: ["/assets/bday/sunnyday/4.JPG","/assets/bday/sunnyday/5.JPG"]
+        },
         
     ];
     const handleTouchStart = (e: React.TouchEvent) => {
@@ -149,7 +198,7 @@ const EventPage: React.FC = () => {
             </h1>
 
             <div className="flex flex-col gap-12 w-full max-w-5xl">
-                {content[1].data.map((item, index) => (
+                {content[3].data.map((item, index) => (
                     <div
                         key={index}
                         className={`flex flex-col md:flex-row items-center justify-between gap-4 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""}`}
@@ -195,7 +244,7 @@ const EventPage: React.FC = () => {
                 ))}
 
                 {/* Swipeable Carousel for extraGallery */}
-                {content[1].extraGallery.length > 0 ? (
+                {content[3].extraGallery.length > 0 ? (
                     <div className="w-full mt-8">
                         <h2 className="text-2xl md:text-3xl font-semibold text-purple-600 mb-4">
                             Additional Gallery
@@ -204,7 +253,7 @@ const EventPage: React.FC = () => {
                             className="relative w-full overflow-hidden"
                             onTouchStart={handleTouchStart}
                             onTouchMove={handleTouchMove}
-                            onTouchEnd={() => handleTouchEnd(content[1].extraGallery.length)}
+                            onTouchEnd={() => handleTouchEnd(content[3].extraGallery.length)}
                         >
                             <div
                                 className="flex transition-transform duration-500"
@@ -212,7 +261,7 @@ const EventPage: React.FC = () => {
                                     transform: `translateX(-${currentSlide * 100}%)`,
                                 }}
                             >
-                                {content[1].extraGallery.map((imgSrc, index) => (
+                                {content[6].extraGallery.map((imgSrc, index) => (
                                     <div key={index} className="min-w-full">
                                         <img
                                             src={imgSrc}
@@ -225,7 +274,7 @@ const EventPage: React.FC = () => {
                         </div>
                         {/* Indicators */}
                         <div className="flex justify-center mt-4 gap-2">
-                            {content[1].extraGallery.map((_, index) => (
+                            {content[3].extraGallery.map((_, index) => (
                                 <button
                                     key={index}
                                     className={`w-3 h-3 rounded-full ${currentSlide === index ? "bg-purple-600" : "bg-gray-300"}`}

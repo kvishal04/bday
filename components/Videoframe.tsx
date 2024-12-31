@@ -32,10 +32,6 @@ const Videoframe = () => {
         <p className="mt-4 text-lg leading-relaxed text-gray-600">
           Pause, play, and immerse yourself in a world of imagination where every second counts.
         </p>
-
-        <button className="mt-8 px-6 py-3 bg-white text-gray-900 rounded-full shadow-md hover:bg-yellow-300 transition-all duration-300">
-          Learn More
-        </button>
       </div>
     </div>
   );

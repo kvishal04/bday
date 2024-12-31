@@ -47,7 +47,7 @@ const BirthdayPage: React.FC = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const herPhotoUrl = "/assets/bday/randomclicks/Snapchat-1687387090.jpg"; 
+  const herPhotoUrl = "/assets/bday/randomclicks/5.jpg"; 
 
   return (
     <div className="relative flex flex-col items-center justify-center p-12 bg-animated-gradient text-gray-800 overflow-hidden">

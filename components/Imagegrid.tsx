@@ -11,59 +11,52 @@ const images = [
     tag: 'mybday'
   },
   {
-    src: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Forest',
+    src: '/assets/bday/arcade22JUN/2.jpg',
+    alt: 'Arcade',
     height: 350, // Custom height
    tag: 'arcade'
   },
   {
-    src: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Beach',
+   
+    alt: 'Diwali',
     height: 400, // Custom height
+    src: '/assets/bday/diwali/12.jpeg',
    tag: 'diwali'
   },
   {
-    src: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Road',
+   
+    src: '/assets/bday/durgapuja/6.jpeg',
+    alt: 'Durga Puja',
     height: 250, // Custom height
    tag: 'durgapuja'
   },
   {
-    src: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Cat',
+  
+    src: '/assets/bday/randomclicks/6.jpg',
+    alt: 'Random Clicks',
     height: 450, // Custom height
    tag: 'random'
   },
   {
-    src: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Mountain',
+   
+    src: '/assets/bday/sunnyday/4.JPG',
+    alt: 'Sunny Day',
     height: 300, // Custom height
    tag: 'sunnyday'
   },
   {
-    src: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Camping',
+    src: '/assets/bday/christmas/3.JPG',
+    alt: 'Christmas',
     height: 250, // Custom height
    tag: 'christmas'
   },
   {
-    src: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Desert',
-    height: 450, // Custom height
-   tag: 'holi'
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Camping',
+    src: '/assets/bday/foodanddrinks/0.jpg',
+    alt: 'Food and Drinks',
     height: 250, // Custom height
-   tag: 'aniversary'
+   tag: 'foodanddrinks'
   },
-  {
-    src: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    alt: 'Camping',
-    height: 250, // Custom height
-   tag: 'yourselfies'
-  },
+ 
 ];
 
 const ImageGrid = () => {
