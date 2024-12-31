@@ -1,11 +1,12 @@
 "use client";
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Link from "next/link";
 
 const images = [
   {
     src: '/assets/bday/4mayBday/Snapchat-1120770251.jpg',
-    alt: 'Breakfast',
+    alt: 'My B-Day 🎂',
     height: 300, // Custom height
     tag: 'mybday'
   },
@@ -109,7 +110,8 @@ const ImageGrid = () => {
       }`}
     >
       {images.map((image, index) => (
-        <div
+        <Link
+          href={`/event?tag=${image.tag}`}
           key={index}
           className={`relative group overflow-hidden rounded-lg shadow-lg transition-transform duration-1000 ease-out ${
             activeIndex === index ? "animate-grow-shrink" : ""
@@ -128,7 +130,7 @@ const ImageGrid = () => {
             <h2 className="text-lg font-bold">{image.alt}</h2>
             <p className="text-sm">A floating animation effect!</p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

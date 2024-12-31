@@ -74,7 +74,7 @@ const BirthdayPage: React.FC = () => {
         }`}
       >
         <h1 className="text-4xl md:text-5xl font-handwritten text-pink-600 animate-float">
-          Happy Birthday, My Love!
+          Happy Birthday 🎂, My Love!
         </h1>
         <p className="mt-4 text-lg md:text-xl text-gray-600">
           Today is all about you. Thank you for filling my life with love and joy.
