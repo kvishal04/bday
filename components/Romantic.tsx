@@ -39,33 +39,33 @@ const BirthdayPage: React.FC = () => {
   }, []);
 
   // // Autoplay audio when user interacts
-  // useEffect(() => {
-  //   const enableAudioOnGesture = () => {
-  //     const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
-  //     if (audio && !hasUserInteracted) {
-  //       audio.muted = true; // Start muted
-  //       audio.play().then(() => {
-  //         audio.muted = false; // Unmute on user gesture
-  //         setHasUserInteracted(true);
-  //         setIsPlaying(true);
-  //       }).catch((err) => console.error("Audio play failed:", err));
-  //     }
-  //   };
+  useEffect(() => {
+    const enableAudioOnGesture = () => {
+      const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
+      if (audio && !hasUserInteracted) {
+        audio.muted = true; // Start muted
+        audio.play().then(() => {
+          audio.muted = false; // Unmute on user gesture
+          setHasUserInteracted(true);
+          setIsPlaying(true);
+        }).catch((err) => console.error("Audio play failed:", err));
+      }
+    };
 
-  //   const handleGesture = () => {
-  //     enableAudioOnGesture();
-  //     document.removeEventListener("click", handleGesture);
-  //     document.removeEventListener("scroll", handleGesture);
-  //   };
+    const handleGesture = () => {
+      enableAudioOnGesture();
+      document.removeEventListener("click", handleGesture);
+      document.removeEventListener("scroll", handleGesture);
+    };
 
-  //   document.addEventListener("click", handleGesture);
-  //   document.addEventListener("scroll", handleGesture);
+    document.addEventListener("click", handleGesture);
+    document.addEventListener("scroll", handleGesture);
 
-  //   return () => {
-  //     document.removeEventListener("click", handleGesture);
-  //     document.removeEventListener("scroll", handleGesture);
-  //   };
-  // }, [hasUserInteracted]);
+    return () => {
+      document.removeEventListener("click", handleGesture);
+      document.removeEventListener("scroll", handleGesture);
+    };
+  }, [hasUserInteracted]);
 
   // // Handle visibility of the button and the play/pause action based on scroll
   useEffect(() => {
