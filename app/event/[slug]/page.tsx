@@ -64,7 +64,7 @@ const EventPage: React.FC = () => {
                     text: "I really loved the way you think about decor , put your efforts in it , i wish when we live together we will make our home beautiful as much as this",
                 },
                 {
-                    imgSrc: "/assets/bday/diwali/11.mp4",
+                    imgSrc: "/assets/bday/diwali/cracker.mp4",
                     type:"video",
                     text: "Chamakti raat, sitare saath, aur tumhaara chehra roshan, Phooljhadi ke noor mein laga jaise chand se ujala roshan.Tere hansi ke saath har shola muskuraya,Is Diwali ne phir ek naya khwab sajaya. 🌙✨",
                 },
