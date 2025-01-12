@@ -14,12 +14,13 @@ const Videoframe = () => {
         {/* Video Section */}
         <div className="w-full h-auto rounded-lg shadow-2xl">
         <div
-          dangerouslySetInnerHTML={{
-            __html: `<video className="app__backgroundVideo" autoplay loop muted playsinline>
-      <source src='/assets/bday/eyes.mp4' type="video/mp4" />
-      Your browser does not support the video tag.
-</video>`,
-          }}
+        dangerouslySetInnerHTML={{
+          __html: `<video class="app__backgroundVideo" autoplay loop muted playsinline>
+            <source src='/assets/bday/eyes.mp4' type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>`,
+        }}
+        
         />
           {/* <video
             className="w-full h-auto rounded-lg shadow-2xl"
