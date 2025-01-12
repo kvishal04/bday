@@ -15,13 +15,12 @@ const Videoframe = () => {
         <div className="w-full">
           <video
             className="w-full h-auto rounded-lg shadow-2xl"
-            autoPlay
             loop
-            muted
+            controls
             playsInline
           >
             <source
-              src="/assets/bday/1.mp4"
+              src="/assets/bday/eyes.mp4"
               type="video/mp4"
             />
             Your browser does not support the video tag.
