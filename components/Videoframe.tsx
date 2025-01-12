@@ -16,9 +16,9 @@ const Videoframe = () => {
           <video
             className="w-full h-auto rounded-lg shadow-2xl"
             src="/assets/bday/eyes.mp4"
-            loop
+            autoPlay
+            muted
             controls
-            playsInline
           >
           </video>
         </div>
