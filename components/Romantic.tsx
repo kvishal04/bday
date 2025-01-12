@@ -38,36 +38,36 @@ const BirthdayPage: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Autoplay audio when user interacts
-  useEffect(() => {
-    const enableAudioOnGesture = () => {
-      const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
-      if (audio && !hasUserInteracted) {
-        audio.muted = true; // Start muted
-        audio.play().then(() => {
-          audio.muted = false; // Unmute on user gesture
-          setHasUserInteracted(true);
-          setIsPlaying(true);
-        }).catch((err) => console.error("Audio play failed:", err));
-      }
-    };
+  // // Autoplay audio when user interacts
+  // useEffect(() => {
+  //   const enableAudioOnGesture = () => {
+  //     const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
+  //     if (audio && !hasUserInteracted) {
+  //       audio.muted = true; // Start muted
+  //       audio.play().then(() => {
+  //         audio.muted = false; // Unmute on user gesture
+  //         setHasUserInteracted(true);
+  //         setIsPlaying(true);
+  //       }).catch((err) => console.error("Audio play failed:", err));
+  //     }
+  //   };
 
-    const handleGesture = () => {
-      enableAudioOnGesture();
-      document.removeEventListener("click", handleGesture);
-      document.removeEventListener("scroll", handleGesture);
-    };
+  //   const handleGesture = () => {
+  //     enableAudioOnGesture();
+  //     document.removeEventListener("click", handleGesture);
+  //     document.removeEventListener("scroll", handleGesture);
+  //   };
 
-    document.addEventListener("click", handleGesture);
-    document.addEventListener("scroll", handleGesture);
+  //   document.addEventListener("click", handleGesture);
+  //   document.addEventListener("scroll", handleGesture);
 
-    return () => {
-      document.removeEventListener("click", handleGesture);
-      document.removeEventListener("scroll", handleGesture);
-    };
-  }, [hasUserInteracted]);
+  //   return () => {
+  //     document.removeEventListener("click", handleGesture);
+  //     document.removeEventListener("scroll", handleGesture);
+  //   };
+  // }, [hasUserInteracted]);
 
-  // Handle visibility of the button and the play/pause action based on scroll
+  // // Handle visibility of the button and the play/pause action based on scroll
   useEffect(() => {
     const handleScroll = () => {
       const audio = document.getElementById("birthdayMusic") as HTMLAudioElement;
@@ -113,18 +113,7 @@ const BirthdayPage: React.FC = () => {
   return (
     <div className="relative flex flex-col items-center justify-center p-12 bg-animated-gradient text-gray-800 overflow-hidden">
       {/* Render particles */}
-      <Particles
-        options={{
-          particles: {
-            number: { value: 40 },
-            size: { value: 3 },
-            move: { speed: 1 },
-            opacity: { value: 0.3 },
-            line_linked: { enable: false },
-          },
-        }}
-        className="absolute inset-0 z-0"
-      />
+      
 
       {/* Fade-in Container */}
       <div
